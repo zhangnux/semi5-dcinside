@@ -6,7 +6,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-int boardNo = Integer.parseInt(request.getParameter("boardNo"));
+	int boardNo = Integer.parseInt(request.getParameter("boardNo"));
 	int writerNo = Integer.parseInt(request.getParameter("writerNo"));
 	int commentNo = Integer.parseInt(request.getParameter("commentNo"));
 	int order = Integer.parseInt(request.getParameter("order"));

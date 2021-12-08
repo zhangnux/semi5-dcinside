@@ -4,7 +4,7 @@
 <header class="header">
 	<div class="head">
 		<h1 class="logo">
-			<a href="http://localhost/semi5/index.jsp"><img src="/semi_dc/resources/images/dc_logo.png" alt="dc_logo"></a>
+			<a href="http://localhost/semi5/index.jsp"><img src="/semi5/resources/images/dc_logo.png" alt="dc_logo"></a>
 		</h1>
 		<ul class="head_list">
 			<li><a href="/semi5/hit.jsp">HIT 갤러리</a></li>

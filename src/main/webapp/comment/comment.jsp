@@ -5,8 +5,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-int boardNo = Integer.parseInt(request.getParameter("boardNo"));
-	String pageNo = request.getParameter("pageNo");
+	int boardNo = Integer.parseInt(request.getParameter("boardNo"));
+	int pageNo = Integer.parseInt(request.getParameter("pageNo"));
 	String content = request.getParameter("content");
 
 	User loginUserInfo = (User) session.getAttribute("LOGIN_USER_INFO");

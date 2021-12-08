@@ -107,6 +107,7 @@ User loginUserInfo = (User)session.getAttribute("LOGIN_USER_INFO");
 									<tr>
 										<td class="col-9">
 											<%=comment.getBoard().getContent()%>
+											</a>
 										</td>
 										<td class="col-2" style="font-size:13px;"><%=DateUtils.dateToString(comment.getBoard().getCreatedDate())%></td>
 										<td class="col-1"></td>

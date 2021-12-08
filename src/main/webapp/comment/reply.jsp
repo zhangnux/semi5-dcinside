@@ -5,7 +5,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-User loginUserInfo = (User) session.getAttribute("LOGIN_USER_INFO");
+	User loginUserInfo = (User) session.getAttribute("LOGIN_USER_INFO");
 	
 	int boardNo = Integer.parseInt(request.getParameter("boardNo"));
 	String pageNo = request.getParameter("pageNo");
@@ -39,5 +39,5 @@ User loginUserInfo = (User) session.getAttribute("LOGIN_USER_INFO");
 	board.setCommentCount(board.getCommentCount()+1);
 	boardDao.updateBoard(board);	
 
-	response.sendRedirect("../diablo/detail.jsp?no="+boardNo+"&pageNo="+pageNo);
+	response.sendRedirect("../2/detail.jsp?no="+boardNo+"&pageNo="+pageNo);
 %>

@@ -1,3 +1,4 @@
+<%@page import="dao2.DiabloBoardDao"%>
 <%@page import="vo.User"%>
 <%@page import="dao.BoardDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -37,7 +38,7 @@
 	<div class="user_info">
 		<div class="user_inr">
 			<div class="user_name">
-				<strong>semip</strong>님
+				<strong>바꿀이름</strong>님
 			</div>
 			<div class="btn_logout">
 				<a href="#">로그아웃</a>
@@ -51,7 +52,7 @@
 			</ul>
 		</div>
 		<div class="user_option">
-			<a href="http://localhost/semi_dc/gallog/myposting.jsp">MY갤로그</a>
+			<a href="http://localhost/semi5/gallog/myposting.jsp">MY갤로그</a>
 		</div>
 	</div>
 <% } %>	
@@ -72,5 +73,5 @@
 	</div>	
 </article>
 <div class="right_banner">
-	<img src="/semi_dc/resources/images/right_banner.jpg" alt="오른쪽 광고">
+	<img src="/semi5/resources/images/right_banner.jpg" alt="오른쪽 광고">
 </div>
