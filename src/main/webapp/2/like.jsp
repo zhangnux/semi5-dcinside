@@ -1,13 +1,12 @@
 
 <%@page import="vo.BoardLiker"%>
 <%@page import="vo.Board"%>
-<%@page import="dao2.BoardDao"%>
+<%@page import="dao2.DiabloBoardDao"%>
 <%@page import="vo.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-
-	int no = Integer.parseInt(request.getParameter("no"));
+int no = Integer.parseInt(request.getParameter("no"));
 	String pageNo = request.getParameter("pageNo");
 
 	User loginUserInfo = (User)session.getAttribute("LOGIN_USER_INFO");
@@ -18,7 +17,7 @@
 		return;
 	}
 	
-	BoardDao boardDao = BoardDao.getInstance();
+	DiabloBoardDao boardDao = DiabloBoardDao.getInstance();
 	Board board = boardDao.getBoardDetail(no);
 	
 	if(board.getWriter().getNo() == loginUserInfo.getNo()){
@@ -42,5 +41,4 @@
 	boardDao.updateBoard(board);
 	
 	response.sendRedirect("detail.jsp?no="+no+"&pageNo="+pageNo);
-	
 %>

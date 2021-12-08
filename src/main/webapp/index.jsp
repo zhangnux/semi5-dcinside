@@ -20,14 +20,14 @@
 					<div class="row">
 						<div class="col-5">
 				<%
-					String register = request.getParameter("register");
-					if("completed".equals(register)){
+				String register = request.getParameter("register");
+				if("completed".equals(register)){
 				%>
 						<div class="alert alert-primary" role="alert">
 						  회원가입이 완료되었습니다
 						</div>			
 				<%
-					}
+				}
 				%>
 				<%@include file="common/hitMain.jsp" %>
 							<h1>디씨인사이드</h1>	

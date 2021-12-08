@@ -1,7 +1,7 @@
 <%@page import="utils.DateUtils"%>
 <%@page import="vo.Hit"%>
 <%@page import="java.util.List"%>
-<%@page import="dao2.BoardDao"%>
+<%@page import="dao2.DiabloBoardDao"%>
 <%@page import="vo.Pagination"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -16,15 +16,16 @@
 </head>
 <body>
 <%
-    String pageNo = request.getParameter("pageNo");
+String pageNo = request.getParameter("pageNo");
 
-	BoardDao boardDao = BoardDao.getInstance();
+	DiabloBoardDao boardDao = DiabloBoardDao.getInstance();
+	BoardDao boardDao2 = BoardDao.getInstance();
 	
-	int hitRecords = boardDao.getHitRecords();
+	int hitRecords = boardDao2.getHitRecords();
 
 	Pagination pagination = new Pagination(pageNo, hitRecords);
 	
-	List<Hit> hitList = boardDao.getHitPost(pagination.getBegin(), pagination.getEnd());
+	List<Hit> hitList = boardDao2.getHitPost(pagination.getBegin(), pagination.getEnd());
 %>
 <div class="dcwrap">
 	<%@include file="/common/navbar.jsp" %>
@@ -62,29 +63,31 @@
 								</thead>
 								<tbody>
 						<%
-							if (hitList.isEmpty()) {
+						if (hitList.isEmpty()) {
 						%>
 									<tr>
 										<td class="text-center"> 게시글이 없습니다.</td>
 									</tr>
 						<%
-							}
-							
-							for (Hit hit : hitList) {
+						}
+											
+											for (Hit hit : hitList) {
 						%>
 									<tr>
-										<td class="col-2" style="font-size:13px;"><%=hit.getBoardType().getName() %></td>
+										<td class="col-2" style="font-size:13px;"><%=hit.getBoardType().getName()%></td>
 										<td class="col-5">
-											<a href="<%=hit.getBoard().getType()%>/detail.jsp?no=<%=hit.getBoard().getNo() %>">
-											<%=hit.getBoard().getTitle() %></a>
-											(<%=hit.getBoard().getCommentCount() %>)
+											<a href="<%=hit.getBoard().getType()%>/detail.jsp?no=<%=hit.getBoard().getNo()%>">
+											<%=hit.getBoard().getTitle()%></a>
+											(<%=hit.getBoard().getCommentCount()%>)
 										</td>
 										<td class="col-1"><%=hit.getUser().getName()%></td>
-										<td class="col-2" style="font-size:13px;"><%=DateUtils.dateToString(hit.getBoard().getCreatedDate()) %></td>
+										<td class="col-2" style="font-size:13px;"><%=DateUtils.dateToString(hit.getBoard().getCreatedDate())%></td>
 										<td class="col-1"><%=hit.getBoard().getViewCount()%></td>
 										<td class="col-1"><%=hit.getBoard().getLikeCount()%></td>
 									</tr>
-						<% } %>
+						<%
+						}
+						%>
 								</tbody>	
 							</table>
 						</div>
@@ -109,19 +112,18 @@
 			        <span aria-hidden="true">&laquo;</span>
 			      </a>
 			    </li>
-				<li class="page-item <%=!pagination.isExistPrev() ? "disabled" : "" %>"><a class="page-link" href="hit.jsp?pageNo=<%=pagination.getPrevPage()%>" >이전</a></li>
+				<li class="page-item <%=!pagination.isExistPrev() ? "disabled" : ""%>"><a class="page-link" href="hit.jsp?pageNo=<%=pagination.getPrevPage()%>" >이전</a></li>
 <%
-
-	for (int num = pagination.getBeginPage(); num <= pagination.getEndPage(); num++) {
+for (int num = pagination.getBeginPage(); num <= pagination.getEndPage(); num++) {
 %>					
-				<li class="page-item <%=pagination.getPageNo() == num ? "active" : "" %>"><a class="page-link" href="hit.jsp?pageNo=<%=num%>"><%=num%></a></li>
+				<li class="page-item <%=pagination.getPageNo() == num ? "active" : ""%>"><a class="page-link" href="hit.jsp?pageNo=<%=num%>"><%=num%></a></li>
 <%
-	}
+}
 %>					
 
-				<li class="page-item <%=!pagination.isExistNext() ? "disabled" :"" %>"><a class="page-link" href="hit.jsp?pageNo=<%=pagination.getNextPage()%>" >다음</a></li>
+				<li class="page-item <%=!pagination.isExistNext() ? "disabled" :""%>"><a class="page-link" href="hit.jsp?pageNo=<%=pagination.getNextPage()%>" >다음</a></li>
 			    <li class="page-item">
-			      <a class="page-link" href="hit.jsp?pageNo=<%=pagination.getEnd() %>" aria-label="Next">
+			      <a class="page-link" href="hit.jsp?pageNo=<%=pagination.getEnd()%>" aria-label="Next">
 			        <span aria-hidden="true">&raquo;</span>
 			      </a>
 			    </li>

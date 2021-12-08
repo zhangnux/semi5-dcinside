@@ -1,4 +1,5 @@
-
+<%@page import="dao.BoardDao"%>
+<%@page import="dao2.DiabloBoardDao"%>
 <%@page import="utils.DateUtils"%>
 <%@page import="vo.Board"%>
 <%@page import="java.util.List"%>
@@ -16,18 +17,17 @@
 </head>
 <body>
 <%
-
-	BoardDao boardDao = BoardDao.getInstance();
+	BoardDao boardDao = dao.BoardDao.getInstance();
+	DiabloBoardDao boardDao2 = dao2.DiabloBoardDao.getInstance();
 
 	String pageNo = request.getParameter("pageNo");
 	String arrange = request.getParameter("arrange");
 	
-	int totalRecords = boardDao.getTotalRecords();
+	int totalRecords = boardDao.getHitRecords();
 	
 	Pagination pagination = new Pagination(pageNo, totalRecords);
 	
-	List<Board> boardList = boardDao.getBoardList(pagination.getBegin(), pagination.getEnd());
-	
+	List<Board> boardList = boardDao2.getBoardList(pagination.getBegin(), pagination.getEnd());
 %>
 <div class="dcwrap">
 	<%@include file="/common/navbar.jsp" %>
@@ -73,7 +73,7 @@
 <% 
 
 	if("view".equals(arrange)){		
-		boardList = boardDao.getBoardArrange(pagination.getBegin(), pagination.getEnd());	
+		boardList = boardDao2.getBoardArrange(pagination.getBegin(), pagination.getEnd());	
 	}
 
 	if(boardList.isEmpty()){

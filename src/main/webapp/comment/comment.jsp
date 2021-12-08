@@ -1,13 +1,11 @@
-<%@page import="dao2.BoardDao"%>
+<%@page import="dao2.DiabloBoardDao"%>
 <%@page import="vo.Board"%>
 <%@page import="vo.Comment"%>
 <%@page import="vo.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-
-
-	int boardNo = Integer.parseInt(request.getParameter("boardNo"));
+int boardNo = Integer.parseInt(request.getParameter("boardNo"));
 	String pageNo = request.getParameter("pageNo");
 	String content = request.getParameter("content");
 
@@ -22,7 +20,7 @@
 		return;
 	}
 
-	BoardDao boardDao = BoardDao.getInstance();
+	DiabloBoardDao boardDao = DiabloBoardDao.getInstance();
 	Board board = boardDao.getBoardDetail(boardNo);
 
 	Comment comment = new Comment();
@@ -37,5 +35,4 @@
 	boardDao.updateBoard(board);
 	
 	response.sendRedirect("../2/detail.jsp?no="+boardNo+"&pageNo="+pageNo);
-
 %>

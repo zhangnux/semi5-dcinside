@@ -3,7 +3,7 @@
 <%@page import="vo.Comment"%>
 <%@page import="java.util.List"%>
 <%@page import="vo.Board"%>
-<%@page import="dao2.BoardDao"%>
+<%@page import="dao2.DiabloBoardDao"%>
 <%@page import="vo.User"%>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -23,11 +23,11 @@
 	<%@include file="/common/navbar.jsp" %>
 		<div class="wrap_inner">
 <%
-	int no = Integer.parseInt(request.getParameter("no"));
+int no = Integer.parseInt(request.getParameter("no"));
 	String pageNo = request.getParameter("pageNo");
 	String error = request.getParameter("error");
 	
-	BoardDao boardDao = BoardDao.getInstance();
+	DiabloBoardDao boardDao = DiabloBoardDao.getInstance();
 	Board board = boardDao.getBoardDetail(no);
 	//board.setViewCount(board.getViewCount()+1);
 	boardDao.updateBoard(board);
@@ -53,61 +53,66 @@
 						<div class="col mb-3">
 							<!-- 간격(spacing): https://getbootstrap.kr/docs/5.1/utilities/spacing/ -->
 							<div class="border-top border-bottom">
-								<div class="fs-4 pt-2"><%=board.getTitle() %></div>
+								<div class="fs-4 pt-2"><%=board.getTitle()%></div>
 								<div>
-									<small><%=board.getWriter().getName() %></small> 
-									<small class="ml-3 ps-2 border-start"><%=board.getCreatedDate() %></small>
+									<small><%=board.getWriter().getName()%></small> 
+									<small class="ml-3 ps-2 border-start"><%=board.getCreatedDate()%></small>
 								</div>
 								<div class="text-end border-bottom">
-									<small>조회 <%=board.getViewCount() %></small>
+									<small>조회 <%=board.getViewCount()%></small>
 									<small class="ml-3 ps-2 border-start">추천
-				<% if(board.getLikeCount() > 0){ %>
-									<a class="p-2" data-bs-toggle="modal" data-bs-target="<%=board.getLikeCount() > 0 ? "#liker": "" %>">
-				<% } %>
-									 <%=board.getLikeCount() %></a></small>
+				<%
+									if(board.getLikeCount() > 0){
+									%>
+									<a class="p-2" data-bs-toggle="modal" data-bs-target="<%=board.getLikeCount() > 0 ? "#liker": ""%>">
+				<%
+				}
+				%>
+									 <%=board.getLikeCount()%></a></small>
 								</div>
-								<div class="py-3"><%=board.getContent() %></div>
+								<div class="py-3"><%=board.getContent()%></div>
 								
 								
 								<!-- 중복추천 경고창 -->
 								<%
-									if ("alreadyLike".equals(error)){
+								if ("alreadyLike".equals(error)){
 								%>
 										<div class="alert alert-danger" role="alert">
 										  이미 추천한 글입니다.
 										</div>
-								<% } %>
+								<%
+								}
+								%>
 								<!-- 추천/즐찾 버튼 -->
 								<div class="row d-flex justify-content-center">
 									<div class="col-3 border border-2 mt-5 mb-4 bg-secondary bg-opacity-10">
 										<div>
-											<a class="p-2" data-bs-toggle="modal" data-bs-target="<%=board.getLikeCount() > 0 ? "#liker": "" %>">
-										 		<strong><%=board.getLikeCount() %></strong>
+											<a class="p-2" data-bs-toggle="modal" data-bs-target="<%=board.getLikeCount() > 0 ? "#liker": ""%>">
+										 		<strong><%=board.getLikeCount()%></strong>
 										 	</a>
 										 	<!-- 추천아이콘 -->
 				<%
-					boolean canLike = false;
-					if (loginUserInfo != null) {
-						if (loginUserInfo.getNo() != board.getWriter().getNo()) {
-							BoardLiker boardLiker = boardDao.getBoardLiker(no, loginUserInfo.getNo());
-							if (boardLiker == null) {
-								canLike = true;
+				boolean canLike = false;
+							if (loginUserInfo != null) {
+								if (loginUserInfo.getNo() != board.getWriter().getNo()) {
+									BoardLiker boardLiker = boardDao.getBoardLiker(no, loginUserInfo.getNo());
+									if (boardLiker == null) {
+										canLike = true;
+									}
+								}
 							}
-						}
-					}
-					/*
-					
-					로그인 한 경우 : 작성자인 경우       비활성화
-					              작성자가 아닌 경우   추천한 경우  비활성화
-					                               추천안한 경우  활성화 
-					*/
-
+							/*
+							
+							로그인 한 경우 : 작성자인 경우       비활성화
+							              작성자가 아닌 경우   추천한 경우  비활성화
+							                               추천안한 경우  활성화 
+							*/
 				%>
-											<a href="like.jsp?no=<%=board.getNo() %>&pageNo=<%=pageNo %>" <%=canLike ? "" : "disabled" %>>
+											<a href="like.jsp?no=<%=board.getNo()%>&pageNo=<%=pageNo%>" <%=canLike ? "" : "disabled"%>>
 												<img class="m-1" src="../resources/images/like.png">
 											</a>
 											<!-- 즐찾아이콘 -->
-											<a href="" <%=canLike ? "" : "disabled" %>>
+											<a href="" <%=canLike ? "" : "disabled"%>>
 												<img class="m-1" src="../resources/images/bookmark.png">
 											</a>											
 										</div>
@@ -129,14 +134,14 @@
 										<a href="" class="btn btn-light">개념글</a>
 									</div>
 					<%
-						if(loginUserInfo != null && loginUserInfo.getNo() == board.getWriter().getNo()){
+					if(loginUserInfo != null && loginUserInfo.getNo() == board.getWriter().getNo()){
 					%>
 									<div>
-										<a href="updateform.jsp?no=<%=board.getNo() %>&pageNo=<%=pageNo %>" class="btn btn-secondary">수정</a>
+										<a href="updateform.jsp?no=<%=board.getNo()%>&pageNo=<%=pageNo%>" class="btn btn-secondary">수정</a>
 										<a class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#deleteConfirm">삭제</a>
 									</div>
 					<%
-						}
+					}
 					%>
 								</div>
 							</div>
@@ -149,75 +154,81 @@
 
 	<!-- 경고창 -->
 <%
-	if ("comcont".equals(error)){
+if ("comcont".equals(error)){
 %>
 		<div class="alert alert-danger" role="alert">
 		  내용을 입력하세요.
 		</div>
-<% } %>
+<%
+}
+%>
 
 <%
-	if ("commmentId".equals(error)){
+if ("commmentId".equals(error)){
 %>
 		<div class="alert alert-danger" role="alert">
 		  로그인이 필요합니다.
 		</div>
-<% } %>
+<%
+}
+%>
 
 
 	<!-- 댓글창시작 -->
-<%	
-	if(!commentList.isEmpty()){	
+<%
+if(!commentList.isEmpty()){	
 
-		for(Comment comments : commentList){		
+		for(Comment comments : commentList){
 %>
 				<div class="row p-2">
 					<div class="col <%=comments.getOrder() != 0 ? "ps-5" : ""%>">
 						<div class="row <%=comments.getOrder() != 0 ? "border pt-2 pb-2" : ""%>">
 							
 <%
-				if (comments.getDeleted().equals("Y")) {
-%>
+							if (comments.getDeleted().equals("Y")) {
+							%>
 							<div class="col-12">삭제된 댓글입니다.</div>
 	
-<%		
-				} else {
-%>
-							<div class="col-2" style="font-size:15px"><%=comments.getWriter().getName() %></div>
-							<div class="col-7"><%=comments.getContent() %></div>
-							<div class="col-2" style="font-size:11px;"><%=DateUtils.dateToString(comments.getCreatedDate()) %></div>
+<%
+	} else {
+	%>
+							<div class="col-2" style="font-size:15px"><%=comments.getWriter().getName()%></div>
+							<div class="col-7"><%=comments.getContent()%></div>
+							<div class="col-2" style="font-size:11px;"><%=DateUtils.dateToString(comments.getCreatedDate())%></div>
 							<div class="col-1">
 							<!-- 답글달기 아이콘 -->
 							<%
-								if(loginUserInfo!=null && comments.getOrder() == 0) {
+							if(loginUserInfo!=null && comments.getOrder() == 0) {
 							%>
-								<i class="fa  fa-commenting-o" aria-hidden="true" onclick="toggleform('form-<%=comments.getNo() %>')"></i>
-							<% } 
-								// 댓글 삭제 아이콘							
-								if(loginUserInfo != null && loginUserInfo.getNo() == comments.getWriter().getNo()) {
-									
+								<i class="fa  fa-commenting-o" aria-hidden="true" onclick="toggleform('form-<%=comments.getNo()%>')"></i>
+							<%
+							} 
+													// 댓글 삭제 아이콘							
+													if(loginUserInfo != null && loginUserInfo.getNo() == comments.getWriter().getNo()) {
 							%>				
 		
-								<a href="../comment/delete.jsp?boardNo=<%=board.getNo() %>&writerNo=<%=comments.getWriter().getNo() %>&commentNo=<%=comments.getNo() %>&order=<%=comments.getOrder() %>&groupNo=<%=comments.getGroup() %>">
+								<a href="../comment/delete.jsp?boardNo=<%=board.getNo()%>&writerNo=<%=comments.getWriter().getNo()%>&commentNo=<%=comments.getNo()%>&order=<%=comments.getOrder()%>&groupNo=<%=comments.getGroup()%>">
 								<i class="fa  fa-trash" aria-hidden="true"></i></a>
-							<% } %>								
+							<%
+							}
+							%>								
 							</div>
 		
-<%		
-				}
-%>							
+<%
+		}
+		%>							
 
 			<!-- 대댓글 달기 창 -->
 <%
-			if (comments.getOrder() == 0){
+if (comments.getOrder() == 0){
 %>
-					<div class="row my-3" id="form-<%=comments.getNo() %>" style="display: none;">
+					<div class="row my-3" id="form-<%=comments.getNo()%>" style="display: none;">
 						<div class="col">
 							<!-- comment_no, diablo_board_no, comment_writer_no, comment_content, comment_order, comment_group -->
 							<form method="get" action="../comment/reply.jsp" class="border bg-light p-2">
-								<input type="hidden" name="boardNo" value="<%=board.getNo() %>" />
-								<input type="hidden" name="order" value="<%=comments.getNo() %>" />
-								<input type="hidden" name="group" value="<%=comments.getGroup() %>" />
+								<input type="hidden" name="boardNo" value="<%=board.getNo()%>" />
+								<input type="hidden" name="order" value="<%=comments.getNo()%>" />
+								<input type="hidden" name="group" value="<%=comments.getGroup()%>" />
 								<div class="row g-3">
 									<div class="col-11">
 										<textarea placeholder="타인의 권리를 침해하거나 명예를 훼손하는 댓글은 운영원칙 및 관련법률에 제재를 받을 수 있습니다." rows="2" name="content" class="form-control" style="resize: none;"></textarea>
@@ -230,32 +241,32 @@
 						</div>
 					</div>
 <%
-			}
+}
 %>
 				</div>
 			</div>	
 		</div>
-<%	
-		}
+<%
+}
 %>
 					
 
 <%
-		
-	} else {
-
-%>
+					} else {
+					%>
 			<div class="col ps-5">
 				<div class="row px-3 py-2">
 					작성된 댓글이 없습니다.
 				</div>
 			</div>
-<% } %>
+<%
+}
+%>
 
 		
 <%
-	if (loginUserInfo == null) {
-%>
+		if (loginUserInfo == null) {
+		%>
 	<div class="row mb-3 px-3 py-2">
 		<div class="col">
 			<div class="alert alert-secondary py-2">
@@ -266,13 +277,13 @@
 	</div>
 
 <%
-	} else {
+} else {
 %>
 	<!-- 댓글 달기 창 -->
 	<div class="row mb-3 px-3 py-2">
 		<div class="col">
 			<form method="post" action="../comment/comment.jsp" class="border bg-light p-2">
-				<input type="hidden" name="boardNo" value="<%=board.getNo() %>" />
+				<input type="hidden" name="boardNo" value="<%=board.getNo()%>" />
 				<div class="row g-3">
 					<div class="col-10">
 						<textarea placeholder="타인의 권리를 침해하거나 명예를 훼손하는 댓글은 운영원칙 및 관련법률에 제재를 받을 수 있습니다." rows="5" name="content" class="form-control" style="resize: none;"></textarea>
@@ -285,7 +296,7 @@
 		</div>
 	</div>
 <%
-		}
+}
 %>
 			</div>					
 		</div>

@@ -1,6 +1,6 @@
 package vo;
 
-import dao2.BoardDao;
+import dao2.DiabloBoardDao;
 
 public class Pagination {
 

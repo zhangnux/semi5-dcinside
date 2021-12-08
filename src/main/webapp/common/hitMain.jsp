@@ -1,17 +1,18 @@
+<%@page import="dao.BoardDao"%>
 <%@page import="vo.Pagination"%>
 <%@page import="utils.DateUtils"%>
 <%@page import="vo.Hit"%>
 <%@page import="java.util.List"%>
-<%@page import="dao2.BoardDao"%>
+<%@page import="dao2.DiabloBoardDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-	
-	BoardDao boardDao = BoardDao.getInstance();
+	DiabloBoardDao boardDao = DiabloBoardDao.getInstance();
+	BoardDao boardDao2 = BoardDao.getInstance();
 
-	int hitRecords = boardDao.getHitRecords();
+	int hitRecords = boardDao2.getHitRecords();
 	Pagination pagination = new Pagination("1",hitRecords);
-	List<Hit> hitList = boardDao.getHitPost(1,4);
+	List<Hit> hitList = boardDao2.getHitPost(1,4);
 	
 %>
 <article>
@@ -35,7 +36,7 @@
 	<% 		} %>
 			</ul>
 			<div class="hit_more">
-			<a href="http://localhost/semi_dc/hit.jsp"><i class="fas fa-caret-square-down"></i>더보기</a>
+			<a href="/semi5/hit.jsp"><i class="fas fa-caret-square-down"></i>더보기</a>
 			</div>
 	</div>
 </article>
