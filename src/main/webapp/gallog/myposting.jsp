@@ -3,7 +3,7 @@
 <%@page import="vo.Hit"%>
 <%@page import="java.util.List"%>
 <%@page import="vo.Pagination"%>
-<%@page import="dao2.BoardDao"%>
+<%@page import="dao2.DiabloBoardDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!doctype html>
@@ -17,17 +17,17 @@
 </head>
 <body>
 <%
-
-	User loginUserInfo = (User)session.getAttribute("LOGIN_USER_INFO");
+User loginUserInfo = (User)session.getAttribute("LOGIN_USER_INFO");
 	if(loginUserInfo == null){
 		response.sendRedirect("../loginform.jsp?error=noLogin");
 		return;
 	}
 	
-	BoardDao boardDao = BoardDao.getInstance();
+	DiabloBoardDao boardDao = DiabloBoardDao.getInstance();
+	BoardDao boardDao2 = BoardDao.getInstance();
 	
-	List<Hit> posting = boardDao.getMyPosting(loginUserInfo.getNo());
-	List<Hit> comments = boardDao.getMyComment(loginUserInfo.getNo());
+	List<Hit> posting = boardDao2.getMyPosting(loginUserInfo.getNo());
+	List<Hit> comments = boardDao2.getMyComment(loginUserInfo.getNo());
 %>
 <div class="dcwrap">
 <%@include file="../common/navbar.jsp" %>
@@ -50,29 +50,31 @@
 									</tr>
 								
 						<%
-							if (posting.isEmpty()) {
-						%>
+														if (posting.isEmpty()) {
+														%>
 									<tr class="border-bottom mt-1 p-2 text-center align-middle" style="height: 180px;">
 										<td></td>
 										<td class="align-top text-end"> 작성한 게시글이 없습니다.</td>
 									</tr>
 						<%
-							}
-							
-							for (Hit post : posting) {
+						}
+											
+											for (Hit post : posting) {
 						%>
 									<tr>
-										<td class="col-1" style="font-size:13px;"><%=post.getBoardType().getName() %></td>
+										<td class="col-1" style="font-size:13px;"><%=post.getBoardType().getName()%></td>
 										<td class="col-6">
-											<a href="../<%=post.getBoard().getType()%>/detail.jsp?no=<%=post.getBoard().getNo() %>">
-											<%=post.getBoard().getTitle() %></a>
-											(<%=post.getBoard().getCommentCount() %>)
+											<a href="../<%=post.getBoard().getType()%>/detail.jsp?no=<%=post.getBoard().getNo()%>">
+											<%=post.getBoard().getTitle()%></a>
+											(<%=post.getBoard().getCommentCount()%>)
 										</td>
-										<td class="col-2" style="font-size:13px;"><%=DateUtils.dateToString(post.getBoard().getCreatedDate()) %></td>
+										<td class="col-2" style="font-size:13px;"><%=DateUtils.dateToString(post.getBoard().getCreatedDate())%></td>
 										<td class="col-1"><%=post.getBoard().getViewCount()%></td>
 										<td class="col-1"><%=post.getBoard().getLikeCount()%></td>
 									</tr>
-						<% } %>
+						<%
+						}
+						%>
 								</tbody>	
 							</table>
 						</div>
@@ -91,25 +93,27 @@
 									</tr>
 				
 						<%
-							if (comments.isEmpty()) {
-						%>
+										if (comments.isEmpty()) {
+										%>
 									<tr class="border-bottom mt-1 p-2 text-center align-middle" style="height: 180px;">
 										<td></td>
 										<td class="align-top text-end"> 작성한 댓글이 없습니다.</td>
 									</tr>
 						<%
-							}
-							
-							for (Hit comment : comments) {
+						}
+											
+											for (Hit comment : comments) {
 						%>
 									<tr>
 										<td class="col-9">
-											<%=comment.getBoard().getContent() %>
+											<%=comment.getBoard().getContent()%>
 										</td>
-										<td class="col-2" style="font-size:13px;"><%=DateUtils.dateToString(comment.getBoard().getCreatedDate()) %></td>
+										<td class="col-2" style="font-size:13px;"><%=DateUtils.dateToString(comment.getBoard().getCreatedDate())%></td>
 										<td class="col-1"></td>
 									</tr>
-						<% } %>
+						<%
+						}
+						%>
 								</tbody>	
 							</table>
 						</div>

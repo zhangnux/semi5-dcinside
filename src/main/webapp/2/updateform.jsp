@@ -1,6 +1,6 @@
 <%@page import="vo.User"%>
 <%@page import="vo.Board"%>
-<%@page import="dao2.BoardDao"%>
+<%@page import="dao2.DiabloBoardDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!doctype html>
@@ -14,8 +14,7 @@
 </head>
 <body>
 <%
-
-	BoardDao boardDao = BoardDao.getInstance();
+DiabloBoardDao boardDao = DiabloBoardDao.getInstance();
 	int no = Integer.parseInt(request.getParameter("no"));
 	Board board = boardDao.getBoardDetail(no);
 	
@@ -28,7 +27,6 @@
 		response.sendRedirect("../loginform.jsp?error=noLogin");
 		return;
 	}
-
 %>
 	<div class="dcwrap">
 	<%@include file="/common/navbar.jsp" %>
@@ -44,11 +42,11 @@
 				<div class="col">
 					<form class="border p-3" method="post" action="register.jsp">
 						<div class="mb-3">
-							<input type="text" class="form-control" name="title" value=<%=board.getTitle() %> />
+							<input type="text" class="form-control" name="title" value=<%=board.getTitle()%> />
 							<div class="form-text">※음란물, 차별, 비하, 혐오 및 초상권, 저작권 침해 게시물은 민, 형사상의 책임을 질 수 있습니다.</div>
 						</div>
 						<div class="mb-3">
-							<textarea rows="20" class="form-control" name="content" style="resize: none;"><%=content %></textarea>
+							<textarea rows="20" class="form-control" name="content" style="resize: none;"><%=content%></textarea>
 						</div>
 						<div class="mb-3 text-end">
 							<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#cancelConfirm">취소</button>

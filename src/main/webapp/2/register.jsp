@@ -1,11 +1,10 @@
 <%@page import="vo.User"%>
 <%@page import="vo.Board"%>
-<%@page import="dao2.BoardDao"%>
+<%@page import="dao2.DiabloBoardDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-
-	String title = request.getParameter("title");
+String title = request.getParameter("title");
 	String content = request.getParameter("content");
 	
 	if(title == null || title.isBlank()){
@@ -32,9 +31,8 @@
 	board.setContent(content);
 	board.setWriter(loginUserInfo);
 	
-	BoardDao boardDao = BoardDao.getInstance();
+	DiabloBoardDao boardDao = DiabloBoardDao.getInstance();
 	boardDao.insertBoard(board);
 	
 	response.sendRedirect("list.jsp");
-
 %>
