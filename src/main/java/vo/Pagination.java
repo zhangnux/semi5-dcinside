@@ -4,8 +4,8 @@ import dao2.BoardDao;
 
 public class Pagination {
 
-	private int rowsPerPage = 3;
-	private int pagesPerBlock = 2;
+	private int rowsPerPage = 20;
+	private int pagesPerBlock = 5;
 	private int currentPageNo;
 	private int totalRecords;
 

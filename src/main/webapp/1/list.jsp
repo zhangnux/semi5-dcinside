@@ -1,9 +1,8 @@
 <%@page import="vo.Board"%>
-<%@page import="dao1.AnimalBoardDao"%>
 <%@page import="vo.Pagination"%>
+<%@page import="dao1.AnimalBoardDao"%>
 <%@page import="java.util.List"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!doctype html>
 <html lang="ko">
 <head>
@@ -25,32 +24,46 @@
 						</div>
 					</header>
 					<% 
-						String pageNo = request.getParameter("pageNo");
+					String pageNo = request.getParameter("pageNo");
+					String arrange = request.getParameter("arrange");
+				
+					AnimalBoardDao boardDao = AnimalBoardDao.getInstance();
 					
-						AnimalBoardDao boardDao = AnimalBoardDao.getInstance();
+					
+					int totalRecords = boardDao.getTotalRecords();
+					Pagination pagination = new Pagination(pageNo, totalRecords);
+					
+					List<Board> boardList = boardDao.getBoardList(pagination.getBegin(), pagination.getEnd());
+					
+					/*
+						BoardDao boardDao = BoardDao.getInstance();
+						AnimalBoardDao boardDao2 = AnimalBoardDao.getInstance();
+						String pageNo = request.getParameter("pageNo");
+						String arrange = request.getParameter("arrange");
 						
-						int totalRecords = boardDao.getTotalRecords();
+						int totalRecords = boardDao.getHitRecords();
+						
 						Pagination pagination = new Pagination(pageNo, totalRecords);
 						
-						List<Board> boardList = boardDao.getBoardList(pagination.getBegin(), pagination.getEnd());
-						
+						List<Board> boardList = boardDao2.getBoardList(pagination.getBegin(), pagination.getEnd());
+					*/	
 						User ListloginUserInfo = (User)session.getAttribute("LOGIN_USER_INFO");
 					%>					
 					<article>
-						<div class="col d-flex justify-content-between mb-3 mt-2">
+						<div class="col d-flex justify-content-between mb-2 mt-2">
 							<div>
 								<a href="list.jsp?pageNo=1" class="btn btn-primary">전체글</a>
-								<a href="list.jsp?list=view" class="btn btn-light">개념글</a>
+								<a href="list.jsp?arrange=view&pageNo=1" class="btn btn-light">개념글</a>
 							</div>						
 						</div>
 						<div class="time_list">
 							<table class="table table-sm">
 								<thead>
-									<tr class="d-flex border-top border-primary">
+									<tr class="d-flex border-top border-primary text-center">
 										<th class="col-1">번호</th>
 										<th class="col-6"><div class="mx-auto" style="width: 90px;">제목</div></th>
 										<th class="col-1">글쓴이</th>
-										<th class="col-2">작성일</th>
+										<th class="col-2" >작성일</th>
 										<th class="col-1">조회</th>
 										<th class="col-1">추천</th>
 									</tr>
@@ -68,7 +81,7 @@
 									
 								%>
 									<tr class="d-flex">
-										<td class="col-1"><%=board.getNo() %></td>
+										<td class="col-1 text-center"><%=board.getNo() %></td>
 										<td class="col-6">
 								<% 
 											if ("Y".equals(board.getDeleted())) {
@@ -78,16 +91,16 @@
 											} else {
 								%>
 											<a href="detail.jsp?no=<%=board.getNo() %>&pageNo=<%=pagination.getPageNo()%>">
-												<%=board.getTitle() %>
+												<%=board.getTitle() %> (<%=board.getCommentCount() %>)
 											</a>
 								<% 
 											}								
 								%>		
 										</td>
-										<td class="col-1"><%=board.getWriter().getName() %></td>
-										<td class="col-2"><%=board.getCreatedDate() %></td>
-										<td class="col-1"><%=board.getViewCount() %></td>
-										<td class="col-1"><%=board.getLikeCount() %></td>
+										<td class="col-1 text-center"><%=board.getWriter().getName() %></td>
+										<td class="col-2 text-center"><%=board.getCreatedDate() %></td>
+										<td class="col-1 text-center"><%=board.getViewCount() %></td>
+										<td class="col-1 text-center"><%=board.getLikeCount() %></td>
 									</tr>
 								<%
 										}
@@ -100,7 +113,7 @@
 						<div class="col d-flex justify-content-between mt-2">
 							<div>
 								<a href="list.jsp?list=no" class="btn btn-primary">전체글</a>
-								<a href="list.jsp?list=view" class="btn btn-light">개념글</a>
+								<a href="list.jsp?arrange=view&pageNo=1" class="btn btn-light">개념글</a>
 							</div>
 							<div class="d-flex flex-row-reverse">
 							<%

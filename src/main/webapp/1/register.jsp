@@ -1,6 +1,6 @@
-<%@page import="dao1.AnimalBoardDao"%>
-<%@page import="vo.Board"%>
-<%@page import="vo.User"%>
+<%@page import="com.dc.board.vo.User"%>
+<%@page import="com.dc.board.dao.AnimalBoardDao"%>
+<%@page import="com.dc.board.vo.Board"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 // 폼 입력값 조회

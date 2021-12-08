@@ -64,7 +64,6 @@
 						</form>
 					</div>
 				</div>
-					<img src="../resources/images/dc_logo.png" />				
 				</section>
 				<section class="right_content">
 					<%@ include file="../common/right_section.jsp" %>
