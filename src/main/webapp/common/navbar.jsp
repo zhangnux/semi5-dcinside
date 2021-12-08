@@ -16,7 +16,7 @@
 	<nav class="nav">
 		<ul class="nav_list">
 			<li class="list_gall">갤러리</li>
-			<li><a href="#">동물, 기타</a></li>
+			<li><a href="/semi5/1/list.jsp">동물, 기타</a></li>
 			<li><a href="/semi_dc/2/list.jsp">디아블로</a></li>
 			<li><a href="#">주식</a></li>
 			<li><a href="#">축구</a></li>
