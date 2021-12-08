@@ -16,7 +16,6 @@
 		<div class="wrap_inner">
 			<main class="dc_container">
 				<section class="left_content"> 
-				<!-- 깃허브 업데이트 연습 -->
 					<div class="row">
 						<div class="col-5">
 				<%
@@ -30,12 +29,12 @@
 				}
 				%>
 				<%@include file="common/hitMain.jsp" %>
-							<h1>디씨인사이드</h1>	
-							<div>
-								<a href="loginform.jsp">로그인</a>
-								<a href="registerform.jsp">회원가입</a>
-								<a href="1/list.jsp">게시판</a>
-							</div>
+					<div class="left_banner">
+						<img src="resources/images/left_banner.png" alt="왼쪽 광고">
+					</div>
+				<!-- 실베자리 -->
+
+
 						</div>
 					</div>
 				</section>
@@ -47,5 +46,43 @@
 		<%@include file="common/footer.jsp" %>
 	</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript">
+<%
+String error = request.getParameter("error");
+
+if ("empty".equals(error)){
+%>
+	alert('아이디를 입력해주세요')
+<%
+}
+
+if ("emptyt".equals(error)) {
+%>
+alert('비밀번호를 입력해주세요')
+<%	
+}
+
+if ("not-found-user".equals(error)){
+%>
+alert('없는 아이디입니다.')
+	
+<%	
+}
+
+if ("mismatch-password".equals(error)){
+%>
+alert('틀린 비밀번호입니다.')
+	
+<%		
+}
+
+if ("noLogin".equals(error)){
+%>
+alert('로그인이 필요합니다.')
+	
+<%		
+}
+%>
+</script>
 </body>
 </html>

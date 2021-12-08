@@ -87,7 +87,8 @@ User loginUserInfo = (User)session.getAttribute("LOGIN_USER_INFO");
 							<table class="table table-sm mt-3">
 								<tbody>
 									<tr class="fw-bold">
-										<td class="col-9 text-center">내용</td>
+										<td class="col-2">갤러리</td>
+										<td class="col-7 text-center">내용</td>
 										<td class="col-2">작성일</td>
 										<td class="col-1"></td>
 									</tr>
@@ -105,9 +106,9 @@ User loginUserInfo = (User)session.getAttribute("LOGIN_USER_INFO");
 											for (Hit comment : comments) {
 						%>
 									<tr>
-										<td class="col-9">
+										<td class="col-2" style="font-size:13px;"><%=comment.getBoardType().getName() %></td>
+										<td class="col-7">
 											<%=comment.getBoard().getContent()%>
-											</a>
 										</td>
 										<td class="col-2" style="font-size:13px;"><%=DateUtils.dateToString(comment.getBoard().getCreatedDate())%></td>
 										<td class="col-1"></td>

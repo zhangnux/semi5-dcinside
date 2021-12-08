@@ -169,8 +169,7 @@ public class BoardDao {
 			board.setCreatedDate(rs.getDate("comment_created_date"));
 			board.setType(rs.getInt("board_type_code"));
 			
-			boardType.setName("board_type_name");
-			boardType.setBoard(board);
+			boardType.setName(rs.getString("board_type_name"));
 			
 			hit.setBoard(board);
 			hit.setBoardType(boardType);
