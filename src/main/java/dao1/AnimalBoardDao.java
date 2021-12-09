@@ -545,10 +545,10 @@ public class AnimalBoardDao {
 		
 		String sql="select board_no, board_title, board_content, board_like_count, board_comment_count, "
 				+ "		   board_view_count, board_created_date, user_name, user_id, user_no "
-				+ "from ( select row_number() over(order by B.board_view_count desc) rn,"
+				+ "from ( select row_number() over(order by B.board_view_count desc) rn, "
 				+ "				 b.board_no, b.board_title, b.board_writer_no, b.board_content, "
 				+ "				 b.board_like_count,b.board_view_count,b.board_deleted,b.board_created_date, "
-				+ "				 b.board_comment_count, u.user_no, u.user_id, u.user_name"
+				+ "				 b.board_comment_count, u.user_no, u.user_id, u.user_name "
 				+ "       from tb_animal_boards b, tb_common_users u "
 				+ "       where b.board_writer_no = u.user_no "
 				+ "		  and b.board_deleted = 'N') "
@@ -590,5 +590,7 @@ public class AnimalBoardDao {
 		return boardList;
 		
 	}
+	
+	
 	
 }

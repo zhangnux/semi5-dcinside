@@ -24,30 +24,17 @@
 						</div>
 					</header>
 					<% 
-					String pageNo = request.getParameter("pageNo");
-					String arrange = request.getParameter("arrange");
-				
-					AnimalBoardDao boardDao = AnimalBoardDao.getInstance();
-					
-					
-					int totalRecords = boardDao.getTotalRecords();
-					Pagination pagination = new Pagination(pageNo, totalRecords);
-					
-					List<Board> boardList = boardDao.getBoardList(pagination.getBegin(), pagination.getEnd());
-					
-					/*
-						BoardDao boardDao = BoardDao.getInstance();
-						AnimalBoardDao boardDao2 = AnimalBoardDao.getInstance();
 						String pageNo = request.getParameter("pageNo");
 						String arrange = request.getParameter("arrange");
+					
+						AnimalBoardDao boardDao = AnimalBoardDao.getInstance();
 						
-						int totalRecords = boardDao.getHitRecords();
-						
+						int totalRecords = boardDao.getTotalRecords();
 						Pagination pagination = new Pagination(pageNo, totalRecords);
 						
-						List<Board> boardList = boardDao2.getBoardList(pagination.getBegin(), pagination.getEnd());
-					*/	
-						User ListloginUserInfo = (User)session.getAttribute("LOGIN_USER_INFO");
+						List<Board> boardList = boardDao.getBoardList(pagination.getBegin(), pagination.getEnd());
+						
+						User loginUserInfo = (User)session.getAttribute("LOGIN_USER_INFO");
 					%>					
 					<article>
 						<div class="col d-flex justify-content-between mb-2 mt-2">
@@ -91,7 +78,7 @@
 											} else {
 								%>
 											<a href="detail.jsp?no=<%=board.getNo() %>&pageNo=<%=pagination.getPageNo()%>">
-												<%=board.getTitle() %> (<%=board.getCommentCount() %>)
+												<%=board.getTitle() %> 
 											</a>
 								<% 
 											}								
@@ -118,7 +105,7 @@
 							<div class="d-flex flex-row-reverse">
 							<%
 								// 로그인되지 않은 경우 새 글 버튼이 출력되지않는다.
-								if (ListloginUserInfo != null) { 
+								if (loginUserInfo != null) { 
 							%>
 								<a href="form.jsp" class="btn btn-primary ms-1">글쓰기</a>
 							<%

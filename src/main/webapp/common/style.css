@@ -531,18 +531,3 @@ a {
   font-family: tahoma, sans-serif;
   color: #333;
 }
-
-/* ---------- 게시판 영역 ----------*/
-
-.list_head {
-  height: 41px;
-  padding: 4px 0 3px;
-  border-bottom: 2px solid #29367c;
-  margin-bottom: 4px;
-}
-
-.list_head h2{
-  font-size: 24px;
-  font-weight: bold;
-  color: #29367c;
-}

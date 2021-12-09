@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <footer class="dcfoot">
 	<div class="info_policy">
-		<a href="#">장정윤</a>
+		<a href="http://localhost/semi5/introduce/jy.jsp">장정윤</a>
 		<a href="#">강태현</a>
 		<a href="#">신재호</a>
 		<a href="#">이승준</a>
