@@ -32,6 +32,7 @@ int no = Integer.parseInt(request.getParameter("no"));
 		return;		
 	}
 	
+	boardLiker = new BoardLiker();
 	boardLiker.setBoardNo(no);
 	boardLiker.setUserNo(loginUserInfo.getNo());
 	

@@ -8,7 +8,7 @@
 		</h1>
 		<ul class="head_list">
 			<li><a href="/semi5/hit.jsp">HIT 갤러리</a></li>
-			<li><a href="#">실시간 베스트</a></li>
+			<li><a href="/semi5/timeBest.jsp">베스트 갤러리</a></li>
 		</ul>
 	</div>
 </header>
@@ -20,7 +20,7 @@
 			<li><a href="/semi5/2/list.jsp">디아블로</a></li>
 			<li><a href="/semi5/3/list.jsp">주식</a></li>
 			<li><a href="/semi5/4/list.jsp">축구</a></li>
-			<li><a href="/semi5/5/list.jsp">코인</a></li>
+			<li><a href="/semi5/5/list.jsp?list=no&categoryNo=1">코인</a></li>
 			<li><a href="/semi5/6/list.jsp">핫플레이스</a></li>
 		</ul>
 	</nav>

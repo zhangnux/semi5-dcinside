@@ -15,7 +15,7 @@
 	// 로그인 여부 확인
 	User loginUserInfo = (User) session.getAttribute("LOGIN_USER_INFO");
 	if(loginUserInfo == null || loginUserInfo.getNo() != writerNo){
-		response.sendRedirect("../diablo/detail.jsp?no="+boardNo+"&error=commentId");
+		response.sendRedirect("../2/detail.jsp?no="+boardNo+"&error=commentId");
 		return;
 	}
 

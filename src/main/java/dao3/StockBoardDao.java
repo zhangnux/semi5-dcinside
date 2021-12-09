@@ -223,7 +223,8 @@ public class StockBoardDao {
 				   + "             B.board_no, B.board_title, U.user_no, U.user_id, U.user_name, B.board_content,  "
 				   + "             B.board_view_count, B.board_like_count, B.board_deleted, B.board_created_date "
 				   + "      from tb_stock_boards B, tb_comm_users U "
-				   + "      where B.board_writer_no = U.user_no) "
+				   + "      where B.board_writer_no = U.user_no"
+				   + "		and b.board_deleted = 'N') "
 				   + "where rn >= ? and rn <= ? ";
 		List<Board> boardList = new ArrayList<>();
 		
@@ -481,7 +482,8 @@ public class StockBoardDao {
 	 * @throws SQLException
 	 */
 	public List<Comment> getAllComment(int no) throws SQLException{
-		String sql = "select * "
+		String sql = "select comment_no, comment_content, comment_deleted, comment_created_date, comment_order,"
+				+ "			 comment_group, board_no, user_no, user_name "
 					+"from (select *  "
 					+ "		from tb_stock_boards b, tb_stock_board_comments c	"
 					+ "		where b.board_no = c.stock_board_no	)board, tb_comm_users u "

@@ -1,7 +1,5 @@
 package vo;
 
-import dao2.DiabloBoardDao;
-
 public class Pagination {
 
 	private int rowsPerPage = 10;

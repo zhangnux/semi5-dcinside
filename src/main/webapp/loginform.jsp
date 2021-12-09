@@ -11,7 +11,7 @@
 %>
 				
 	<div class="log_inr">
-		<form action="login.jsp" class="login_process" method="post">
+		<form action="http://localhost/semi5/login.jsp" class="login_process" method="post">
 			<div class="login_form">
 				<div class="input_box">
 					<label for="user_id">아이디</label>
@@ -27,7 +27,7 @@
 			</div>
 		</form>
 		<div class="option">
-			<a href="#"><strong>회원가입</strong></a>
+			<a href="http://localhost/semi5/registerform.jsp"><strong>회원가입</strong></a>
 		</div>
 	</div>
 
@@ -41,14 +41,13 @@
 				<strong><%=rightLoginUserInfo.getName() %></strong>님
 			</div>
 			<div class="btn_logout">
-				<a href="logout.jsp">로그아웃</a>
+				<a href="http://localhost/semi5/logout.jsp">로그아웃</a>
 			</div>
 		</div>
-		<div class="info_detail">
+		<div class="info_detail text-center">
 			<ul class="info_list">
 				<li>글 <span><%=BoardDao.getInstance().getMyPostingCount(rightLoginUserInfo.getNo()) %></span></li>
 				<li>댓글 <span><%=BoardDao.getInstance().getMyCommentCount(rightLoginUserInfo.getNo()) %></span></li>
-				<li>즐겨찾기 <span>74</span></li>
 			</ul>
 		</div>
 		<div class="user_option">

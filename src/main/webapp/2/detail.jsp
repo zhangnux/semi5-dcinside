@@ -1,3 +1,4 @@
+<%@page import="vo.Pagination"%>
 <%@page import="utils.DateUtils"%>
 <%@page import="vo.BoardLiker"%>
 <%@page import="vo.Comment"%>
@@ -24,7 +25,6 @@
 			<main class="dc_container">
 				<section class="left_content">
 				
-
 <%
 	int no = Integer.parseInt(request.getParameter("no"));
 	String pageNo = request.getParameter("pageNo");
@@ -32,7 +32,7 @@
 	
 	DiabloBoardDao boardDao = DiabloBoardDao.getInstance();
 	Board board = boardDao.getBoardDetail(no);
-	//board.setViewCount(board.getViewCount()+1);
+	board.setViewCount(board.getViewCount()+1);
 	boardDao.updateBoard(board);
 	
 	List<Comment> commentList = boardDao.getAllComment(no);
@@ -76,6 +76,15 @@
 								
 								<!-- 중복추천 경고창 -->
 								<%
+								if ("likeLogin".equals(error)){
+								%>
+										<div class="alert alert-danger" role="alert">
+										  본인의 글에는 불가능한 기능입니다.
+										</div>
+								<%
+								}
+								%>
+								<%
 								if ("alreadyLike".equals(error)){
 								%>
 										<div class="alert alert-danger" role="alert">
@@ -86,7 +95,7 @@
 								%>
 								<!-- 추천/즐찾 버튼 -->
 								<div class="row d-flex justify-content-center">
-									<div class="col-3 border border-2 mt-5 mb-4 bg-secondary bg-opacity-10">
+									<div class="col-3 mt-5 mb-4">
 										<div>
 											<a class="p-2" data-bs-toggle="modal" data-bs-target="<%=board.getLikeCount() > 0 ? "#liker": ""%>">
 										 		<strong><%=board.getLikeCount()%></strong>
@@ -111,11 +120,7 @@
 				%>
 											<a href="like.jsp?no=<%=board.getNo()%>&pageNo=<%=pageNo%>" <%=canLike ? "" : "disabled"%>>
 												<img class="m-1" src="../resources/images/like.png">
-											</a>
-											<!-- 즐찾아이콘 -->
-											<a href="" <%=canLike ? "" : "disabled"%>>
-												<img class="m-1" src="../resources/images/bookmark.png">
-											</a>											
+											</a>										
 										</div>
 									</div>
 								</div>
@@ -272,7 +277,6 @@ if (comments.getOrder() == 0){
 		<div class="col">
 			<div class="alert alert-secondary py-2">
 				로그인 작성자만 댓글을 작성 할 수 있습니다.
-				<a class="btn btn-outline-primary btn-sm" href="../loginform.jsp">로그인</a>
 			</div>
 		</div>
 	</div>
