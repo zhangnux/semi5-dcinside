@@ -223,7 +223,7 @@ public class StockBoardDao {
 				   + "             B.board_no, B.board_title, U.user_no, U.user_id, U.user_name, B.board_content,  "
 				   + "             B.board_view_count, B.board_like_count, B.board_deleted, B.board_created_date "
 				   + "      from tb_stock_boards B, tb_comm_users U "
-				   + "      where B.board_writer_no = U.user_no"
+				   + "      where B.board_writer_no = U.user_no "
 				   + "		and b.board_deleted = 'N') "
 				   + "where rn >= ? and rn <= ? ";
 		List<Board> boardList = new ArrayList<>();
