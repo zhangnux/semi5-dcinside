@@ -1,5 +1,5 @@
 <%@page import="vo.Board"%>
-<%@page import="dao6.HotPlaceBoardDao"%>
+<%@page import="dao6.HotplaceBoardDao"%>
 <%@page import="vo.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
@@ -16,7 +16,8 @@ int boardNo = Integer.parseInt(request.getParameter("boardNo"));
 	}
 	
 	// 선택된 게시글 정보를 가져옴
-	HotPlaceBoardDao boardDao = HotPlaceBoardDao.getInstance();
+
+	HotplaceBoardDao boardDao = HotplaceBoardDao.getInstance();
 	Board board = boardDao.getBoardDetail(boardNo);
 	
 	// 게시글을 작성한 유저번호와 로그인 된 유저번호를 비교

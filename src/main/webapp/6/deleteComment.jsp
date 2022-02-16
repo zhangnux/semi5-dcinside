@@ -1,6 +1,6 @@
+<%@page import="dao6.CommentDao"%>
 <%@page import="vo.User"%>
 <%@page import="vo.Comment"%>
-<%@page import="dao6.CommentDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 	int boardNo = Integer.parseInt(request.getParameter("boardNo"));

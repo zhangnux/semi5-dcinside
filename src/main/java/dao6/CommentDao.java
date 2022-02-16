@@ -40,7 +40,7 @@ public class CommentDao {
 				   + "                                       ,comment_content "
 				   + "                                       ,comment_order "
 				   + "                                       ,comment_group) "
-				   + "values (comm_board_comment_seq.nextval, ?, ?, ?, ?, comm_board_comment_group_seq.nextval) ";
+				   + "values (comm_hotplace_comment_seq.nextval, ?, ?, ?, ?, comm_hotplace_comment_group_seq.nextval) ";
 		
 		Connection connection = getConnection();
 		PreparedStatement pstmt = connection.prepareStatement(sql);
@@ -62,7 +62,8 @@ public class CommentDao {
 				   + "									     ,comment_content "
 				   + "									     ,comment_order "
 				   + "   								     ,comment_group) "
-				   + "values (comm_board_comment_seq.nextval, ?, ?, ?, ?, ?) ";
+				   + "values (comm_hotplace_comment_seq.nextval, ?, ?, ?, ?, ?) ";
+
 		
 		Connection connection = getConnection();
 		PreparedStatement pstmt = connection.prepareStatement(sql);
@@ -88,8 +89,8 @@ public class CommentDao {
 		Comment comment = null;
 		User user = null;
 	  
-		String sql = "select * "
-				   + "from (select *"
+		String sql = "select board.comment_no, board.comment_content, board.comment_deleted, board.comment_created_date, board.comment_order, board.comment_group, u.user_id "
+				   + "from (select b.board_no, c.board_type_code, c.comment_content, c.comment_created_date, c.comment_deleted, c.comment_group, c.comment_no, c.comment_order, c.comment_writer_no  "
 				   + "      from tb_hotplace_boards b, tb_hotplace_board_comments c "
 				   + "      where b.board_no = c.hotplace_board_no) board, tb_comm_users u "
 				   + "where board.comment_writer_no = u.user_no "

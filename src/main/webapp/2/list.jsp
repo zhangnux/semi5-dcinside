@@ -17,8 +17,8 @@
 </head>
 <body>
 <%
-	BoardDao boardDao = dao.BoardDao.getInstance();
-	DiabloBoardDao boardDao2 = dao2.DiabloBoardDao.getInstance();
+	BoardDao boardDao = BoardDao.getInstance();
+	DiabloBoardDao boardDao2 = DiabloBoardDao.getInstance();
 
 	String pageNo = request.getParameter("pageNo");
 	String arrange = request.getParameter("arrange");

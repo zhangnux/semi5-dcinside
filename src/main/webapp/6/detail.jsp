@@ -1,43 +1,40 @@
+<%@page import="vo.Comment"%>
+<%@page import="dao6.CommentDao"%>
 <%@page import="vo.User"%>
 <%@page import="vo.Board"%>
-<%@page import="vo.Comment"%>
-<%@page import="dao6.HotPlaceBoardDao"%>
-<%@page import="dao6.CommentDao"%>
+<%@page import="dao6.HotplaceBoardDao"%>
 <%@page import="utils.DateUtils"%>
 <%@page import="java.util.List"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!doctype html>
 <html lang="ko">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" >
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link rel = "stylesheet" href="/semi_dc/common/style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">	
+	<link rel = "stylesheet" href="../common/style.css">
 	<title>## CONNECTING HEARTS! 디시인사이드입니다. ## </title>
 </head>
-<body>
-	<!-- wrap Start-->
-	<div class="dcwrap">
-		<!-- navbar Start-->
-		<%@ include file="/common/navbar.jsp" %>
-		<!-- navbar End-->
 <%
 	int boardNo = Integer.parseInt(request.getParameter("boardNo"));
-	int currentPageNo = Integer.parseInt(request.getParameter("cpno"));
+	int pageNo = Integer.parseInt(request.getParameter("cpno"));
+	String error = (String) request.getParameter("error");
 	
-	HotPlaceBoardDao boardDao = HotPlaceBoardDao.getInstance();
+	HotplaceBoardDao boardDao = HotplaceBoardDao.getInstance();
 	Board board = boardDao.getBoardDetail(boardNo);
 	
 	board.setViewCount(board.getViewCount() + 1);
 	boardDao.updateBoard(board);
 %>
-		<!-- wrap_inner Start-->
+
+<body>
+<div class="dcwrap">
+	<%@include file="/common/navbar.jsp" %>
 		<div class="wrap_inner">
-			<main class="container">
-			<!-- left content Start -->
-				<div class="row">
-					<div class="col">
+			<main class="dc_container">
+				<section class="left_content">
 						<h2>핫플레이스 갤러리</h2>
 							<div class="border-top fs-4 pt-2"><%=board.getTitle() %></div>
 							<div>
@@ -51,19 +48,25 @@
 							<div class="text-wrap py-3">
 								<div class="contentArea"><%=board.getContent() %></div>
 							</div>
+								<%
+								if ("deny-like".equals(error)){
+								%>
+										<div class="alert alert-danger text-center" role="alert">
+										  이미 추천한 글입니다.
+										</div>
+								<%
+								}
+								%>						
 								
 <!-- btn align div Start-->
 <div class="border-top border-bottom text-end">
-	<a href="list.jsp?cpno=<%=currentPageNo %>" class="btn btn-primary btn-sm my-3">목록</a>
+	<a href="list.jsp?cpno=<%=pageNo %>" class="btn btn-primary btn-sm my-3">목록</a>
 <%
 	User loginUserInfoByDetail = (User) session.getAttribute("LOGIN_USER_INFO");
 	if (loginUserInfoByDetail != null && loginUserInfoByDetail.getNo() != board.getWriter().getNo()) {
 %>
 		<!-- 추천 링크 -->
-		<a href="like.jsp?typeCode=6&boardNo=<%=boardNo %>&cpno=<%=currentPageNo %>" class="btn btn-primary btn-sm my-3">추천</a>
-		
-		<!-- 즐겨찾기 링크 -->
-		<a href="" class="btn btn-outline-warning btn-sm my-3">★즐겨찾기</a>
+		<a href="like.jsp?typeCode=6&boardNo=<%=boardNo %>&cpno=<%=pageNo %>" class="btn btn-primary btn-sm my-3">추천</a>
 <%
 	}
 %>	
@@ -71,7 +74,7 @@
 	if (loginUserInfoByDetail != null && loginUserInfoByDetail.getNo() == board.getWriter().getNo()) {
 %>		
 		<!-- 수정 링크 -->
-		<a href="updateForm.jsp?boardNo=<%=boardNo %>&cpno=<%=currentPageNo %>" class="btn btn-primary btn-sm my-3">
+		<a href="updateForm.jsp?boardNo=<%=boardNo %>&cpno=<%=pageNo %>" class="btn btn-primary btn-sm my-3">
 			수정
 		</a>
 		
@@ -80,13 +83,11 @@
 <%
 	}
 %>
+
 </div>
 <!-- btn align div End-->
 							
 <!-- conment Start -->
-<div class="mt-2">
-	<small>전체댓글: 10개</small>
-</div>
 	<ul class="border-top border-bottom">
 <% 
 	CommentDao commentDao = CommentDao.getInstance();
@@ -113,7 +114,7 @@
 							<form method="post" action="commentReplyRegister.jsp">
 								<div class="mb-3">
 									<input type="hidden" class="form-control" name="boardNo" value="<%=boardNo %>" />
-									<input type="hidden" class="form-control" name="cpno" value="<%=currentPageNo %>" />
+									<input type="hidden" class="form-control" name="cpno" value="<%=pageNo %>" />
 									<input type="hidden" class="form-control" name="orderNo" value="1" />
 									<input type="hidden" class="form-control" name="groupNo" value="<%=comment.getGroup() %>" />
 									<textarea rows="3" class="form-control" name="comment" style="resize: vertical;"></textarea>
@@ -133,7 +134,7 @@
 		      	<%
 		      		if (loginUserInfoByDetail != null && loginUserInfoByDetail.getNo() == board.getWriter().getNo()) {
 		      	%>
-		      	<a href="deleteComment.jsp?boardNo=<%=board.getNo() %>&cpno=<%=currentPageNo %>&commentNo=<%=comment.getNo() %>">
+		      	<a href="deleteComment.jsp?boardNo=<%=board.getNo() %>&cpno=<%=pageNo %>&commentNo=<%=comment.getNo() %>">
 		      		<i class="fa fa-trash" aria-hidden="true"></i>
 		      	</a>
 		      	<%
@@ -161,7 +162,7 @@
 <%
 	if (loginUserInfoByDetail != null && loginUserInfoByDetail.getNo() == board.getWriter().getNo()) {
 %>
-				      	<a href="deleteComment.jsp?boardNo=<%=board.getNo() %>&cpno=<%=currentPageNo %>&commentNo=<%=comment.getNo() %>">
+				      	<a href="deleteComment.jsp?boardNo=<%=board.getNo() %>&cpno=<%=pageNo %>&commentNo=<%=comment.getNo() %>">
 					      	<i class="fa  fa-trash" aria-hidden="true"></i>
 				      	</a>
 <%
@@ -189,7 +190,7 @@
 			<form method="post" action="commentRegister.jsp">
 				<div class="mb-3">
 					<input type="hidden" class="form-control" name="boardNo" value="<%=boardNo %>" />
-					<input type="hidden" class="form-control" name="cpno" value="<%=currentPageNo %>" />
+					<input type="hidden" class="form-control" name="cpno" value="<%=pageNo %>" />
 					<input type="hidden" class="form-control" name="orderNo" value="0" />
 					<textarea rows="3" class="form-control" name="comment" style="resize: vertical;"></textarea>
 				</div>
@@ -201,21 +202,6 @@
 	</div>
 	<!-- commentForm End -->
 	<!-- comment End -->
-					</div>
-					<!-- col end -->
-				</div>
-				<!-- row end -->
-			<!-- left content End -->
-			</main>
-		</div>
-		<!-- wrap_inner End-->
-
-		<!-- footer Start -->
-		<%@ include file="/common/footer.jsp" %>
-		<!-- footer End -->
-	</div>
-	<!-- wrap End-->
-	
 <!-- 삭제 Modal Start-->
 <div class="modal fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -229,7 +215,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">아니요</button>
-        <a href="delete.jsp?boardNo=<%=board.getNo() %>&cpno=<%=currentPageNo %>">
+        <a href="delete.jsp?boardNo=<%=board.getNo() %>&cpno=<%=pageNo %>">
         	<button type="button" class="btn btn-primary">네</button>
         </a>
       </div>
@@ -237,6 +223,14 @@
   </div>
 </div>
 <!-- Modal End-->	
-</body>
+				</section>
+				<section class="right_content">
+					<%@include file="/common/right_section.jsp" %>
+				</section>
+			</main>
+		</div>
+		<%@include file="/common/footer.jsp" %>
+	</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>

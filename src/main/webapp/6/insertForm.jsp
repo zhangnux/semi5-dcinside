@@ -1,6 +1,6 @@
-<%@page import="vo.Board"%>
 <%@page import="vo.User"%>
-<%@page import="dao6.HotPlaceBoardDao"%>
+<%@page import="vo.Board"%>
+<%@page import="dao.BoardDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!doctype html>
 <html lang="ko">
@@ -12,13 +12,11 @@
 	<title>## CONNECTING HEARTS! 디시인사이드입니다. ## </title>
 </head>
 <body>
-	<!-- wrap Start-->
 	<div class="dcwrap">
-		<!-- navbar Start-->
 		<%@ include file="/common/navbar.jsp" %>
 		<!-- navbar End-->
-<%
-User loginUserInfoByInsertFrom = (User) session.getAttribute("LOGIN_USER_INFO");
+<% 
+	User loginUserInfoByInsertFrom = (User) session.getAttribute("LOGIN_USER_INFO");
 	String currentPageNo = request.getParameter("cpno"); 
 	
 	if (loginUserInfoByInsertFrom == null) {
@@ -30,11 +28,13 @@ User loginUserInfoByInsertFrom = (User) session.getAttribute("LOGIN_USER_INFO");
 			<main class="dc_container">
 			<!-- left contents Start -->
 			<section class="left_content">
-				<div class="row">
-					<div class="col mb-2 mt-2">
-						<h2>핫플레이스 갤러리</h2>
+					<div class="row">
+						<div class="col mb-4 mt-2 border-bottom">
+							<div class="col">
+								<h2 class="fw-bold"><a href="list.jsp">핫플레이스 갤러리</a></h2>
+							</div>
+						</div>		
 					</div>
-				</div>
 				<div class="row">
 					<div class="col">
 						<form method="post" action="insertRegister.jsp">
@@ -47,30 +47,20 @@ User loginUserInfoByInsertFrom = (User) session.getAttribute("LOGIN_USER_INFO");
 							</div>
 							
 							<div class="mb-3 text-end">
-								<a href="list.jsp?cpno=<%=currentPageNo%>" type="button" class="btn btn-secondary">취소</a>
+								<a href="list.jsp?cpno=<%=currentPageNo %>" type="button" class="btn btn-secondary">취소</a>
 								<button type="submit" class="btn btn-primary ">등록</button>
 							</div>
 						</form>
 					</div>
-				</div>
-			</section>
-			<!-- left contents End -->
-			
-			<!-- right content Start -->
-			<section class="right_content">
-				<%@include file="/common/right_section.jsp" %>
-			</section>
-			<!-- right content End -->
+				</div>			
+				</section>
+				<section class="right_content">
+					<%@include file="/common/right_section.jsp" %>
+				</section>
 			</main>
 		</div>
-		<!-- wrap_inner End-->
+		<%@include file="/common/footer.jsp" %>
 	</div>
-	<!-- wrap End-->	
-</body>
-<!-- footer Start -->
-<%@ include file="/common/footer.jsp" %>
-<!-- footer End -->
-
-<!-- script -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>

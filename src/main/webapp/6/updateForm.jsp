@@ -1,24 +1,21 @@
-<%@ page import="vo.User" %>
-<%@ page import="vo.Board"%>
-<%@ page import="dao6.HotPlaceBoardDao"%>
+<%@page import="vo.Board"%>
+<%@page import="dao6.HotplaceBoardDao"%>
+<%@page import="vo.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!doctype html>
 <html lang="ko">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" >
-	<link rel = "stylesheet" href="../common/style.css">
-	<title>## CONNECTING HEARTS! 디시인사이드입니다. ## </title>
-</head>
+<%@ include file="/common/head.jsp" %>
 <body>
 	<!-- wrap Start-->
 	<div class="dcwrap">
+		<!-- header Start-->
+		<%@ include file="/common/header.jsp" %>
+		<!-- header End-->
 		<!-- navbar Start-->
 		<%@ include file="/common/navbar.jsp" %>
 		<!-- navbar End-->
 <%
-User loginUserInfoByInsertFrom = (User) session.getAttribute("LOGIN_USER_INFO");
+	User loginUserInfoByInsertFrom = (User) session.getAttribute("LOGIN_USER_INFO");
 	if (loginUserInfoByInsertFrom == null) {
 		response.sendRedirect("../index.jsp?error=required");
 	}
@@ -26,7 +23,7 @@ User loginUserInfoByInsertFrom = (User) session.getAttribute("LOGIN_USER_INFO");
 	int boardNo = Integer.parseInt(request.getParameter("boardNo"));
 	int currentPageNo = Integer.parseInt(request.getParameter("cpno"));
 	
-	HotPlaceBoardDao boardDao = HotPlaceBoardDao.getInstance();
+	HotplaceBoardDao boardDao = HotplaceBoardDao.getInstance();
 	Board board = boardDao.getBoardDetail(boardNo);
 %>
 		<!-- wrap_inner Start-->
@@ -43,13 +40,13 @@ User loginUserInfoByInsertFrom = (User) session.getAttribute("LOGIN_USER_INFO");
 					<div class="col">
 						<form method="post" action="updateRegister.jsp">
 							<div class="mb-3">
-								<input type="text" class="form-control" name="title" value="<%=board.getTitle()%>"/>
-								<input type="hidden" class="form-control" name="boardNo" value="<%=board.getNo()%>"/>
-								<input type="hidden" class="form-control" name="cpno" value="<%=currentPageNo%>"/>
+								<input type="text" class="form-control" name="title" value="<%=board.getTitle() %>"/>
+								<input type="hidden" class="form-control" name="boardNo" value="<%=board.getNo() %>"/>
+								<input type="hidden" class="form-control" name="cpno" value="<%=currentPageNo %>"/>
 								<div class="form-text">※음란물, 차별, 비하, 혐오 및 초상권, 저작권 침해 게시물은 민, 형사상의 책임을 질 수 있습니다.</div>
 							</div>
 							<div class="mb-3">
-								<textarea rows="20" class="content form-control" name="content" style="resize: none;"><%=board.getContent()%></textarea>
+								<textarea rows="20" class="content form-control" name="content" style="resize: none;"><%=board.getContent() %></textarea>
 							</div>
 							
 							<div class="mb-3 text-end">
@@ -63,9 +60,7 @@ User loginUserInfoByInsertFrom = (User) session.getAttribute("LOGIN_USER_INFO");
 			<!-- left contents End -->
 			
 			<!-- right content Start -->
-			<section class="right_content">
-				<%@include file="/common/right_section.jsp" %>
-			</section>
+			<%@ include file="/common/right_section.jsp" %>
 			<!-- right content End -->
 			</main>
 		</div>
@@ -96,5 +91,5 @@ User loginUserInfoByInsertFrom = (User) session.getAttribute("LOGIN_USER_INFO");
 	<!-- wrap End-->	
 </body>
 <%@ include file="/common/footer.jsp" %>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<%@ include file="/common/script.jsp" %>
 </html>

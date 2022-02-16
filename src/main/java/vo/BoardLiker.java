@@ -4,6 +4,7 @@ public class BoardLiker {
 
 	private int boardNo;
 	private int userNo;
+	private int boardType;
 	
 	public BoardLiker() {}
 
@@ -21,6 +22,14 @@ public class BoardLiker {
 
 	public void setUserNo(int userNo) {
 		this.userNo = userNo;
+	}
+
+	public int getBoardType() {
+		return boardType;
+	}
+
+	public void setBoardType(int boardType) {
+		this.boardType = boardType;
 	}
 	
 }

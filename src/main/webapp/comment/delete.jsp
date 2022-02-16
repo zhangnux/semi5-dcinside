@@ -6,7 +6,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-int boardNo = Integer.parseInt(request.getParameter("boardNo"));
+	int boardNo = Integer.parseInt(request.getParameter("boardNo"));
 	int writerNo = Integer.parseInt(request.getParameter("writerNo"));
 	int commentNo = Integer.parseInt(request.getParameter("commentNo"));
 	int order = Integer.parseInt(request.getParameter("order"));
@@ -15,7 +15,7 @@ int boardNo = Integer.parseInt(request.getParameter("boardNo"));
 	// 로그인 여부 확인
 	User loginUserInfo = (User) session.getAttribute("LOGIN_USER_INFO");
 	if(loginUserInfo == null || loginUserInfo.getNo() != writerNo){
-		response.sendRedirect("../diablo/detail.jsp?no="+boardNo+"&error=commentId");
+		response.sendRedirect("../2/detail.jsp?no="+boardNo+"&error=commentId");
 		return;
 	}
 

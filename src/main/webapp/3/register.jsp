@@ -1,40 +1,38 @@
 <%@page import="vo.User"%>
-<%@page import="dao.UserDao"%>
-<%@page import="org.apache.commons.codec.digest.DigestUtils"%>
+<%@page import="vo.Board"%>
+<%@page import="dao3.StockBoardDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-	String id = request.getParameter("id");
-	String password = request.getParameter("password");
-	String name = request.getParameter("name");
-	String tel = request.getParameter("tel");
-	String email = request.getParameter("email");
+User loginUserInfo = (User)session.getAttribute("LOGIN_USER_INFO");
 	
-	UserDao userDao = UserDao.getInstance();
+	String title = request.getParameter("title");
+	String content = request.getParameter("content");
 	
-	User savedUser = userDao.getUserById(id);
-	if(savedUser != null ){
-		response.sendRedirect("registerform.jsp?error=id-exists");
+	if(title != null && title.isBlank()){
+		response.sendRedirect("form.jsp?error=empty-title");
 		return;
 	}
-		
-	savedUser = userDao.getUserByEmail(email);
-	if(savedUser != null){
-		response.sendRedirect("registerform.jsp?error=email-exists");
+	if(content != null && content.isBlank()){
+		response.sendRedirect("form.jsp?error=empty-content");
 		return;
 	}
 	
-	String secretPassword = DigestUtils.sha256Hex(password);
-
-	User user = new User();
-	user.setId(id);
-	user.setPassword(secretPassword);
-	user.setName(name);
-	user.setTel(tel);
-	user.setEmail(email);
 	
-	userDao.insertUser(user);
+	if (loginUserInfo == null) {
+		response.sendRedirect("../loginform.jsp?error=login-required");
+		return;
+	}
 	
-	response.sendRedirect("index.jsp?register=completed");
 	
+	
+	Board board = new Board();
+	board.setTitle(title);
+	board.setWriter(loginUserInfo);
+	board.setContent(content);
+	
+	StockBoardDao boardDao = StockBoardDao.getInstance();
+	boardDao.insertBoard(board);
+	
+	response.sendRedirect("list.jsp");
 %>

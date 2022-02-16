@@ -11,7 +11,10 @@ import java.util.List;
 
 import vo.Board;
 import vo.BoardLiker;
+
+import vo.BoardType;
 import vo.Comment;
+import vo.Hit;
 import vo.User;
 
 public class StockBoardDao {
@@ -23,6 +26,78 @@ public class StockBoardDao {
 		return self;
 	}
 	
+
+	public List<Hit> getPostCount() throws SQLException {
+		String sql = "select B.board_type_code, B.board_type_name, A.cnt "
+				+ "from ("
+				+ "        select 1 board_type_code, (select count(*) "
+				+ "                                   from tb_animal_boards "
+				+ "                                   where board_created_date >= trunc(sysdate) " 
+				+ "                                  ) cnt "
+				+ "        from dual "
+				+ "        union all "
+				+ "        select 2 board_type_code, (select count(*) "
+				+ "                                   from tb_diablo_boards "
+				+ "                                   where board_created_date >= trunc(sysdate) "
+				+ "                                   ) cnt        "
+				+ "        from dual "
+				+ "        union "
+				+ "        select 3 board_type_code, (select count(*) "
+				+ "                                   from tb_stock_boards "
+				+ "                                   where board_created_date >= trunc(sysdate) "
+				+ "                                   ) cnt        "
+				+ "        from dual "
+				+ "        union "
+				+ "        select 4 board_type_code, (select count(*) "
+				+ "                                   from tb_soccer_boards "
+				+ "                                   where board_created_date >= trunc(sysdate) "
+				+ "                                   ) cnt        "
+				+ "        from dual "
+				+ "        union "
+				+ "        select 5 board_type_code, (select count(*) "
+				+ "                                   from tb_coin_boards "
+				+ "                                   where board_created_date >= trunc(sysdate) "
+				+ "                                   ) cnt        "
+				+ "        from dual "
+				+ "        union "
+				+ "        select 6 board_type_code, (select count(*) "
+				+ "                                   from tb_hotplace_boards "
+				+ "                                   where board_created_date >= trunc(sysdate) "
+				+ "                                   ) cnt        "
+				+ "        from dual "
+				+ "    ) A, tb_boards_type B "
+				+ "where A.board_type_code = B.board_type_code "
+				+ "order by cnt desc";
+			
+	       Connection connection = getConnection();
+	       PreparedStatement pstmt = connection.prepareStatement(sql);
+	       ResultSet rs = pstmt.executeQuery();
+	      
+	       List<Hit> boardList = new ArrayList<>();
+	       
+	      while(rs.next()) {
+	      Board board = new Board();
+	      BoardType boardType = new BoardType();
+	      Hit hit = new Hit();
+	      
+	      boardType.setName(rs.getString("board_type_name"));
+	      board.setType(rs.getInt("board_type_code"));
+	      board.setCommentCount(rs.getInt("cnt"));
+	      
+	      hit.setBoard(board);
+	      hit.setBoardType(boardType);
+	      
+	      boardList.add(hit);
+	      
+	      }
+	      rs.close();
+	      pstmt.close();
+	      connection.close();
+	      
+	      return boardList;
+		
+	}
+
 	/**
 	 * 지정된 번호로 게시글 삭제
 	 * @param no 글번호
@@ -151,7 +226,8 @@ public class StockBoardDao {
 				   + "             B.board_no, B.board_title, U.user_no, U.user_id, U.user_name, B.board_content,  "
 				   + "             B.board_view_count, B.board_like_count, B.board_deleted, B.board_created_date "
 				   + "      from tb_stock_boards B, tb_comm_users U "
-				   + "      where B.board_writer_no = U.user_no) "
+				   + "      where B.board_writer_no = U.user_no "
+				   + "		and b.board_deleted = 'N') "
 				   + "where rn >= ? and rn <= ? ";
 		List<Board> boardList = new ArrayList<>();
 		
@@ -409,7 +485,8 @@ public class StockBoardDao {
 	 * @throws SQLException
 	 */
 	public List<Comment> getAllComment(int no) throws SQLException{
-		String sql = "select * "
+		String sql = "select comment_no, comment_content, comment_deleted, comment_created_date, comment_order,"
+				+ "			 comment_group, board_no, user_no, user_name "
 					+"from (select *  "
 					+ "		from tb_stock_boards b, tb_stock_board_comments c	"
 					+ "		where b.board_no = c.stock_board_no	)board, tb_comm_users u "

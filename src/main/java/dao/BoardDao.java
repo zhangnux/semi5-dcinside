@@ -85,17 +85,17 @@ public class BoardDao {
 				+ "from ( "
 				+ "      select * "
 				+ "      from ( "
-				+ "            select * from tb_diablo_board_comments "
+				+ "            select * from tb_diablo_boards "
 				+ "            union "
-				+ "            select * from tb_animal_board_comments "
+				+ "            select * from tb_animal_boards "
 				+ "            union "
-				+ "            select * from tb_stock_board_comments "
+				+ "            select * from tb_stock_boards "
 				+ "            union "
-				+ "            select * from tb_soccer_board_comments "
+				+ "            select * from tb_soccer_boards "
 				+ "            union "
-				+ "            select * from tb_coin_board_comments "
+				+ "            select * from tb_coin_boards "
 				+ "            union "
-				+ "            select * from tb_hotplace_board_comments "
+				+ "            select * from tb_hotplace_boards "
 				+ "             )A "
 				+ "     ) b, tb_boards_type t, tb_comm_users u "
 				+ "where b.board_writer_no = u.user_no "
@@ -147,10 +147,11 @@ public class BoardDao {
 				+ "            union "
 				+ "            select * from tb_hotplace_board_comments "
 				+ "             ) "
-				+ "     )c, tb_comm_users u "
+				+ "     )c, tb_boards_type t, tb_comm_users u "
 				+ "where c.comment_writer_no = u.user_no "
+				+ "and c.board_type_code = t.board_type_code "
 				+ "and c.comment_deleted = 'N' "
-				+ "and user_no = ?";
+				+ "and user_no = ? ";
 		
 		Connection connection = ConnectionUtil.getConnection();
 		PreparedStatement pstmt = connection.prepareStatement(sql);
@@ -162,11 +163,16 @@ public class BoardDao {
 			
 			Hit hit = new Hit();				
 			Board board = new Board();
+			BoardType boardType = new BoardType();
 			
 			board.setContent(rs.getString("comment_content"));
 			board.setCreatedDate(rs.getDate("comment_created_date"));
+			board.setType(rs.getInt("board_type_code"));
+			
+			boardType.setName(rs.getString("board_type_name"));
 			
 			hit.setBoard(board);
+			hit.setBoardType(boardType);
 			
 			hitList.add(hit);
 			
@@ -192,17 +198,17 @@ public class BoardDao {
 				+ "from ( "
 				+ "      select * "
 				+ "      from ( "
-				+ "            select * from tb_diablo_board_comments "
+				+ "            select * from tb_diablo_boards"
 				+ "            union "
-				+ "            select * from tb_animal_board_comments "
+				+ "            select * from tb_animal_boards "
 				+ "            union "
-				+ "            select * from tb_stock_board_comments "
+				+ "            select * from tb_stock_boards "
 				+ "            union "
-				+ "            select * from tb_soccer_board_comments "
+				+ "            select * from tb_soccer_boards "
 				+ "            union "
-				+ "            select * from tb_coin_board_comments "
+				+ "            select * from tb_coin_boards "
 				+ "            union "
-				+ "            select * from tb_hotplace_board_comments "
+				+ "            select * from tb_hotplace_boards "
 				+ "             )A "
 				+ "     ) b, tb_boards_type t, tb_comm_users u "
 				+ "where b.board_type_code = t.board_type_code "

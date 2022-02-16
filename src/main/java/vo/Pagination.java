@@ -1,11 +1,9 @@
 package vo;
 
-import dao2.DiabloBoardDao;
-
 public class Pagination {
 
-	private int rowsPerPage = 3;
-	private int pagesPerBlock = 2;
+	private int rowsPerPage = 10;
+	private int pagesPerBlock = 5;
 	private int currentPageNo;
 	private int totalRecords;
 

@@ -16,6 +16,7 @@
 <%
 DiabloBoardDao boardDao = DiabloBoardDao.getInstance();
 	int no = Integer.parseInt(request.getParameter("no"));
+	int pageNo = Integer.parseInt(request.getParameter("pageNo"));
 	Board board = boardDao.getBoardDetail(no);
 	
 	String content = board.getContent();
@@ -40,7 +41,7 @@ DiabloBoardDao boardDao = DiabloBoardDao.getInstance();
 			</div>
 			<div class="row">
 				<div class="col">
-					<form class="border p-3" method="post" action="register.jsp">
+					<form class="border p-3" method="post" action="update.jsp?no=<%=no %>&pageNo=<%=pageNo %>">
 						<div class="mb-3">
 							<input type="text" class="form-control" name="title" value=<%=board.getTitle()%> />
 							<div class="form-text">※음란물, 차별, 비하, 혐오 및 초상권, 저작권 침해 게시물은 민, 형사상의 책임을 질 수 있습니다.</div>
@@ -68,7 +69,7 @@ DiabloBoardDao boardDao = DiabloBoardDao.getInstance();
 				      </div>
 				      <div class="modal-footer">
 				        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-				        <a class="btn btn-primary" href="list.jsp">확인</a>
+				        <a class="btn btn-primary" href="detail.jsp?no=<%=no %>&pageNo=<%=pageNo %>">확인</a>
 				      </div>
 				     </div>
 				  </div>

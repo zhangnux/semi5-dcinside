@@ -1,3 +1,4 @@
+<%@page import="vo.Pagination"%>
 <%@page import="utils.DateUtils"%>
 <%@page import="vo.BoardLiker"%>
 <%@page import="vo.Comment"%>
@@ -5,7 +6,6 @@
 <%@page import="vo.Board"%>
 <%@page import="dao2.DiabloBoardDao"%>
 <%@page import="vo.User"%>
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!doctype html>
@@ -14,30 +14,31 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" >
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link rel = "stylesheet" href="/semi_dc/common/style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">	
+	<link rel = "stylesheet" href="../common/style.css">
 	<title>## CONNECTING HEARTS! 디시인사이드입니다. ## </title>
 </head>
 <body>
-	<div class="dcwrap">
+<div class="dcwrap">
 	<%@include file="/common/navbar.jsp" %>
 		<div class="wrap_inner">
+			<main class="dc_container">
+				<section class="left_content">
+				
 <%
-int no = Integer.parseInt(request.getParameter("no"));
+	int no = Integer.parseInt(request.getParameter("no"));
 	String pageNo = request.getParameter("pageNo");
 	String error = request.getParameter("error");
 	
 	DiabloBoardDao boardDao = DiabloBoardDao.getInstance();
 	Board board = boardDao.getBoardDetail(no);
-	//board.setViewCount(board.getViewCount()+1);
+	board.setViewCount(board.getViewCount()+1);
 	boardDao.updateBoard(board);
 	
 	List<Comment> commentList = boardDao.getAllComment(no);
 	
 	User loginUserInfo = (User)session.getAttribute("LOGIN_USER_INFO");
 %>
-			<main class="dc_container">
-				<section class="left_content"> 
 				
 				<!-- 게시판 제목 -->
 					<div class="row">
@@ -75,6 +76,15 @@ int no = Integer.parseInt(request.getParameter("no"));
 								
 								<!-- 중복추천 경고창 -->
 								<%
+								if ("likeLogin".equals(error)){
+								%>
+										<div class="alert alert-danger" role="alert">
+										  본인의 글에는 불가능한 기능입니다.
+										</div>
+								<%
+								}
+								%>
+								<%
 								if ("alreadyLike".equals(error)){
 								%>
 										<div class="alert alert-danger" role="alert">
@@ -85,7 +95,7 @@ int no = Integer.parseInt(request.getParameter("no"));
 								%>
 								<!-- 추천/즐찾 버튼 -->
 								<div class="row d-flex justify-content-center">
-									<div class="col-3 border border-2 mt-5 mb-4 bg-secondary bg-opacity-10">
+									<div class="col-3 mt-5 mb-4">
 										<div>
 											<a class="p-2" data-bs-toggle="modal" data-bs-target="<%=board.getLikeCount() > 0 ? "#liker": ""%>">
 										 		<strong><%=board.getLikeCount()%></strong>
@@ -110,11 +120,7 @@ int no = Integer.parseInt(request.getParameter("no"));
 				%>
 											<a href="like.jsp?no=<%=board.getNo()%>&pageNo=<%=pageNo%>" <%=canLike ? "" : "disabled"%>>
 												<img class="m-1" src="../resources/images/like.png">
-											</a>
-											<!-- 즐찾아이콘 -->
-											<a href="" <%=canLike ? "" : "disabled"%>>
-												<img class="m-1" src="../resources/images/bookmark.png">
-											</a>											
+											</a>										
 										</div>
 									</div>
 								</div>
@@ -271,7 +277,6 @@ if (comments.getOrder() == 0){
 		<div class="col">
 			<div class="alert alert-secondary py-2">
 				로그인 작성자만 댓글을 작성 할 수 있습니다.
-				<a class="btn btn-outline-primary btn-sm" href="../loginform.jsp">로그인</a>
 			</div>
 		</div>
 	</div>
@@ -301,61 +306,60 @@ if (comments.getOrder() == 0){
 			</div>					
 		</div>
 	</div>
-	</section>
-	<section class="right_content">
-		<%@include file="/common/right_section.jsp" %>
-	</section>
-</main>
+
+			<!-- 추천인 표시 모달창 -->
+				<div class="modal fade" id="liker" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				  <div class="modal-dialog">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <h5 class="modal-title" id="exampleModalLabel">추천인</h5>
+				        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				      </div>
+				      <div class="modal-body">
+				      	<ul>
+			<% 
+				List<User> likerList = boardDao.getLikeUsers(no);
+				for (User liker : likerList){
+			%>
+							<li><%=liker.getName() %></li>
+			<% } %>
+						</ul>
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+				      </div>
+				    </div>
+				  </div>
+				</div>
+								
+			<!-- 삭제 재확인 모달창 -->
+			<div class="modal fade" id="deleteConfirm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			  <div class="modal-dialog modal-dialog-centered">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h6 class="modal-title" id="exampleModalLabel">삭제</h6>
+			        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			      </div>
+			      <div class="modal-body">
+			        게시글을 삭제하시겠습니까?
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+			        <a class="btn btn-primary" href="delete.jsp?no=<%=board.getNo() %>&pageNo=<%=pageNo %>">확인</a>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+
+				
+				</section>
+				<section class="right_content">
+					<%@include file="/common/right_section.jsp" %>
+				</section>
+			</main>
+		</div>
+		<%@include file="/common/footer.jsp" %>
 	</div>
-	<%@include file="/common/footer.jsp" %>
-</div>
-
-
-
-<!-- 추천인 표시 모달창 -->
-	<div class="modal fade" id="liker" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	  <div class="modal-dialog">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <h5 class="modal-title" id="exampleModalLabel">추천인</h5>
-	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-	      </div>
-	      <div class="modal-body">
-	      	<ul>
-<% 
-	List<User> likerList = boardDao.getLikeUsers(no);
-	for (User liker : likerList){
-%>
-				<li><%=liker.getName() %></li>
-<% } %>
-			</ul>
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-	      </div>
-	    </div>
-	  </div>
-	</div>
-					
-<!-- 삭제 재확인 모달창 -->
-<div class="modal fade" id="deleteConfirm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h6 class="modal-title" id="exampleModalLabel">삭제</h6>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        게시글을 삭제하시겠습니까?
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-        <a class="btn btn-primary" href="delete.jsp?no=<%=board.getNo() %>&pageNo=<%=pageNo %>">확인</a>
-      </div>
-    </div>
-  </div>
-</div>
-					
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 <script type="text/javascript">
 function toggleform (id) {
@@ -375,7 +379,6 @@ function loginPlease(){
 function writerLike(){
 	alert("본인의 글에는 불가능합니다.");
 }
-
 </script>
 </body>
 </html>
