@@ -11,6 +11,7 @@ import java.util.List;
 
 import vo.Board;
 import vo.BoardLiker;
+
 import vo.BoardType;
 import vo.Comment;
 import vo.Hit;
@@ -25,6 +26,7 @@ public class StockBoardDao {
 		return self;
 	}
 	
+
 	public List<Hit> getPostCount() throws SQLException {
 		String sql = "select B.board_type_code, B.board_type_name, A.cnt "
 				+ "from ("
@@ -95,6 +97,7 @@ public class StockBoardDao {
 	      return boardList;
 		
 	}
+
 	/**
 	 * 지정된 번호로 게시글 삭제
 	 * @param no 글번호

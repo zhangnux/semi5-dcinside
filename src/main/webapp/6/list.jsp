@@ -6,6 +6,7 @@
 <%@page import="utils.DateUtils"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
 <!doctype html>
 <html lang="ko">
 <head>
@@ -13,6 +14,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" >
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">	
+
 	<link rel = "stylesheet" href="../common/style.css">
 	<title>## CONNECTING HEARTS! 디시인사이드입니다. ## </title>
 </head>
@@ -35,7 +37,6 @@ String pageNo = request.getParameter("pageNo");
 			<main class="dc_container">
 				<!-- left section Start -->
 				<section class="left_content">
-				
 					<div class="row">
 						<div class="col mb-4 mt-2 border-bottom">
 							<div class="col">
@@ -43,7 +44,6 @@ String pageNo = request.getParameter("pageNo");
 							</div>
 						</div>		
 					</div>
-					
 						<table class="table">
 							<thead>
 								<tr>

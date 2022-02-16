@@ -1,4 +1,3 @@
-
 <%@page import="vo.BoardLiker"%>
 <%@page import="vo.Board"%>
 <%@page import="dao6.HotplaceBoardDao"%>
@@ -34,6 +33,7 @@ int typeCode = Integer.parseInt(request.getParameter("typeCode"));
 	
 	BoardLiker boardLiker = new BoardLiker();
 	boardLiker.setBoardType(typeCode);
+
 	boardLiker.setBoardNo(boardNo);
 	boardLiker.setUserNo(loginUserInfo.getNo());
 	boardDao.insertBoardLiker(boardLiker);

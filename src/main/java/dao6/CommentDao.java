@@ -63,6 +63,7 @@ public class CommentDao {
 				   + "									     ,comment_order "
 				   + "   								     ,comment_group) "
 				   + "values (comm_hotplace_comment_seq.nextval, ?, ?, ?, ?, ?) ";
+
 		
 		Connection connection = getConnection();
 		PreparedStatement pstmt = connection.prepareStatement(sql);

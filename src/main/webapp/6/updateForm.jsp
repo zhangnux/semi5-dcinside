@@ -1,4 +1,3 @@
-
 <%@page import="vo.Board"%>
 <%@page import="dao6.HotplaceBoardDao"%>
 <%@page import="vo.User"%>
@@ -12,7 +11,6 @@
 		<!-- header Start-->
 		<%@ include file="/common/header.jsp" %>
 		<!-- header End-->
-		
 		<!-- navbar Start-->
 		<%@ include file="/common/navbar.jsp" %>
 		<!-- navbar End-->

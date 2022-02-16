@@ -1,3 +1,4 @@
+
 <%@page import="dao6.HotplaceBoardDao"%>
 <%@page import="vo.User"%>
 <%@page import="vo.Comment"%>
@@ -10,6 +11,7 @@
 	int orderNo = Integer.parseInt(request.getParameter("orderNo"));
 	String commentContent = request.getParameter("comment");
 	
+
 	HotplaceBoardDao boardDao = HotplaceBoardDao.getInstance();
 	Board board = boardDao.getBoardDetail(boardNo);
 	User loginUserInfo = (User) session.getAttribute("LOGIN_USER_INFO");

@@ -16,6 +16,7 @@ int boardNo = Integer.parseInt(request.getParameter("boardNo"));
 	}
 	
 	// 선택된 게시글 정보를 가져옴
+
 	HotplaceBoardDao boardDao = HotplaceBoardDao.getInstance();
 	Board board = boardDao.getBoardDetail(boardNo);
 	

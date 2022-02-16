@@ -22,7 +22,7 @@
 	board.setTitle(title);
 	board.setWriter(loginUserInfo);
 	board.setContent(content);
-	
+
 	HotplaceBoardDao boardDao = HotplaceBoardDao.getInstance();
 	
 	boardDao.insertBoard(board);

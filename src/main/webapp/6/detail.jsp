@@ -1,4 +1,3 @@
-
 <%@page import="vo.Comment"%>
 <%@page import="dao6.CommentDao"%>
 <%@page import="vo.User"%>
@@ -29,13 +28,13 @@
 	board.setViewCount(board.getViewCount() + 1);
 	boardDao.updateBoard(board);
 %>
+
 <body>
 <div class="dcwrap">
 	<%@include file="/common/navbar.jsp" %>
 		<div class="wrap_inner">
 			<main class="dc_container">
 				<section class="left_content">
-
 						<h2>핫플레이스 갤러리</h2>
 							<div class="border-top fs-4 pt-2"><%=board.getTitle() %></div>
 							<div>
@@ -68,7 +67,6 @@
 %>
 		<!-- 추천 링크 -->
 		<a href="like.jsp?typeCode=6&boardNo=<%=boardNo %>&cpno=<%=pageNo %>" class="btn btn-primary btn-sm my-3">추천</a>
-
 <%
 	}
 %>	
@@ -204,7 +202,6 @@
 	</div>
 	<!-- commentForm End -->
 	<!-- comment End -->
-
 <!-- 삭제 Modal Start-->
 <div class="modal fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">

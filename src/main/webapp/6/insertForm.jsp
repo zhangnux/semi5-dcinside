@@ -52,8 +52,7 @@
 							</div>
 						</form>
 					</div>
-				</div>
-				
+				</div>			
 				</section>
 				<section class="right_content">
 					<%@include file="/common/right_section.jsp" %>
